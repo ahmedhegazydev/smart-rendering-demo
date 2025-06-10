@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:smart-rendering-demo": "node dist/smart-rendering-demo/server/server.mjs"
+    "build:ssr": "ng build && ng run smart-rendering-demo:server",
+    "serve:ssr": "node dist/smart-rendering-demo/server/server.mjs",
+    "dev:ssr": "ng run smart-rendering-demo:serve-ssr"
   },
   "private": true,
   "dependencies": {
