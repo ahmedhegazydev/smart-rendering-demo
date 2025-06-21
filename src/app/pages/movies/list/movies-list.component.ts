@@ -28,23 +28,47 @@ export class MoviesListComponent implements OnInit {
     //لو ظهر بعد وقت قصير من تحميل الصفحة → ده معناه إن Incremental Hydration اشتغل
     console.log('[Hydrated] MoviesListComponent');
 
-    this.http
-      .get<any>(
-        `${this.baseUrl}/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`
-      )
-      .subscribe({
-        next: (response) => {
-          console.log('✅ Movies fetched:', response.results);
-          this.movies = response.results;
-        },
-        error: (err) => {
-          console.error('❌ Error fetching movies:', err);
-        },
-      });
+    // this.http
+    //   .get<any>(
+    //     `${this.baseUrl}/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`
+    //   )
+    //   .subscribe({
+    //     next: (response) => {
+    //       console.log('✅ Movies fetched:', response.results);
+    //       this.movies = response.results;
+    //     },
+    //     error: (err) => {
+    //       console.error('❌ Error fetching movies:', err);
+    //     },
+    //   });
+
+    this.loadMovies(); // load page 1
   }
 
   goToDetails(movieId: number): void {
     console.log(`🎬 Navigating to movie details with ID: ${movieId}`);
     this.router.navigate(['/movie', movieId]);
+  }
+
+  currentPage = 1;
+  isLoading = false;
+
+  loadMovies(page = 1): void {
+    this.isLoading = true;
+    this.http
+      .get<any>(
+        `${this.baseUrl}/movie/popular?api_key=${this.apiKey}&language=en-US&page=${page}`
+      )
+      .subscribe({
+        next: (res) => {
+          this.movies.push(...res.results);
+          this.currentPage = page;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('❌ Error:', err);
+          this.isLoading = false;
+        },
+      });
   }
 }

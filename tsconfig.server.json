@@ -3,9 +3,11 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc/server",
     "target": "ES2020",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "noEmit": false
   },
   "files": ["src/main.server.ts"],
