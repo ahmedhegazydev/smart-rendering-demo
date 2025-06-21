@@ -25,13 +25,20 @@ export class MovieService {
       );
   }
 
+  // getAllIds(): Promise<string[]> {
+  //   const apiUrl = `${this.baseUrl}/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`;
+  //   return this.http
+  //     .get<any>(apiUrl)
+  //     .toPromise()
+  //     .then((response) => {
+  //       return response.results.map((movie: any) => movie.id.toString());
+  //     });
+  // }
+
   getAllIds(): Promise<string[]> {
-    const apiUrl = `${this.baseUrl}/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`;
     return this.http
-      .get<any>(apiUrl)
+      .get<any>(`${this.baseUrl}/movie/popular?api_key=${this.apiKey}`)
       .toPromise()
-      .then((response) => {
-        return response.results.map((movie: any) => movie.id.toString());
-      });
+      .then((res) => res.results.map((movie: any) => movie.id.toString()));
   }
 }

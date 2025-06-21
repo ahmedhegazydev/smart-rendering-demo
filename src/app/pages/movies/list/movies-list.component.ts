@@ -25,6 +25,9 @@ export class MoviesListComponent implements OnInit {
   ngOnInit(): void {
     console.log('🌀 MoviesListComponent initialized');
 
+    //لو ظهر بعد وقت قصير من تحميل الصفحة → ده معناه إن Incremental Hydration اشتغل
+    console.log('[Hydrated] MoviesListComponent');
+
     this.http
       .get<any>(
         `${this.baseUrl}/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`

@@ -5,7 +5,9 @@ import { inject, runInInjectionContext } from '@angular/core';
 export const serverRoutes: ServerRoute[] = [
   {
     path: 'movies',
-    renderMode: RenderMode.Prerender, // صفحة كل الأفلام ثابتة
+    renderMode: RenderMode.Incremental, //  incremental hydration
+    // renderMode: RenderMode.Prerender, // صفحة كل الأفلام ثابتة
+    // fallback: PrerenderFallback.Server, //  مش شرط لكن بيساعد لو الصفحة مش تولدت
   },
   {
     path: 'movie/:id',
