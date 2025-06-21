@@ -1,0 +1,19 @@
+<h2>Popular Movies</h2>
+
+<div class="movie-grid">
+  <div
+    class="movie-card"
+    *ngFor="let movie of movies"
+    (click)="goToDetails(movie.id)"
+  >
+    <!-- <button (click)="goToDetails(123)">Test Click</button> -->
+
+    <img
+      [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+      [alt]="movie.title"
+    />
+    <a [routerLink]="['/movie', movie.id]">
+      <h3>{{ movie.title }}</h3>
+    </a>
+  </div>
+</div>
