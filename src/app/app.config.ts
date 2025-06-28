@@ -7,6 +7,7 @@ import {
   withEventReplay,
   withIncrementalHydration,
 } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
@@ -52,5 +53,7 @@ export const appConfig: ApplicationConfig = {
      * - `withEventReplay()`: Replays user interactions (e.g. clicks) that occur before hydration completes.
      */
     provideClientHydration(withIncrementalHydration(), withEventReplay()),
+
+    provideAnimations(),
   ],
 };

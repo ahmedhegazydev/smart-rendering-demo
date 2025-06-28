@@ -1,16 +1,62 @@
-<h2>Trailer</h2>
+<!--
+  =========================  Trailer Section  =========================
+  * Uses PrimeNG for prebuilt UI components (Card, Skeleton, Message)
+  * Uses Tailwind CSS for layout and styling
+  * Displays a YouTube trailer video in a responsive 16:9 ratio
+  * Shows a loading skeleton while fetching, or a warning if no trailer is available
+  * Controlled by two component variables:
+      - loading     : boolean  → true while fetching trailer
+      - trailerKey  : string   → YouTube video key (null if unavailable)
+-->
 
-<div *ngIf="trailerKey">
-  <iframe
+<!-- Main wrapper for the trailer using PrimeNG Card -->
+<p-card class="mx-auto max-w-3xl shadow-lg">
+  <!-- Section Title -->
+  <h2 class="text-2xl font-semibold mb-4 text-gray-800">Trailer</h2>
+
+  <!-- ===== Loading Skeleton Placeholder ===== -->
+  <!--
+    - <p-skeleton>       : PrimeNG component that shows a gray placeholder box
+    - width/height       : Defines size of the skeleton box
+    - styleClass         : Tailwind classes for margin and border radius
+    - *ngIf="loading"    : Only shown while trailer is being loaded
+  -->
+  <p-skeleton
     width="100%"
-    height="400"
-    [src]="'https://www.youtube.com/embed/' + trailerKey | safe"
-    frameborder="0"
-    allowfullscreen
+    height="250px"
+    styleClass="mb-4 rounded-lg"
+    *ngIf="loading"
   >
-  </iframe>
-</div>
+  </p-skeleton>
 
-<div *ngIf="!trailerKey">
-  <p>No trailer available.</p>
-</div>
+  <!-- ===== Embedded YouTube Video ===== -->
+  <!--
+    - Shown only when trailerKey is available and not loading
+    - Uses padding-bottom trick for 16:9 aspect ratio
+    - iframe is absolutely positioned to fill the container
+    - [src] is bound to sanitized URL using SafePipe
+    - Tailwind class "rounded-lg" adds rounded corners
+  -->
+  <ng-container *ngIf="trailerKey && !loading; else noTrailer">
+    <div class="relative pb-[56.25%]">
+      <iframe
+        class="absolute top-0 left-0 w-full h-full rounded-lg"
+        [src]="'https://www.youtube.com/embed/' + trailerKey | safe"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      >
+      </iframe>
+    </div>
+  </ng-container>
+
+  <!-- ===== No Trailer Available State ===== -->
+  <!--
+    - <p-message>       : PrimeNG alert component
+    - severity="warn"   : Displays as a warning (yellow theme)
+    - text              : Message to show if no trailer is found
+  -->
+  <ng-template #noTrailer>
+    <p-message severity="warn" text="No trailer available."></p-message>
+  </ng-template>
+</p-card>

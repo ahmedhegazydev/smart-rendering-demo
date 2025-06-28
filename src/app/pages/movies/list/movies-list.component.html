@@ -1,25 +1,123 @@
-<h2>Popular Movies</h2>
+<!--
+  ===================== Movies List Section =====================
+  @section Movie Grid Display
+  @description
+  Displays a responsive grid of movie cards using PrimeNG and Tailwind.
+  Each card shows a movie poster and title and is clickable to navigate to movie details.
+  Tailwind is used for layout responsiveness and animation, and PrimeNG provides the Card UI.
+-->
 
-<div class="movie-grid">
-  <div
-    class="movie-card"
+<!-- Section heading -->
+<h2 class="text-2xl font-semibold mb-6 text-gray-800">Popular Movies</h2>
+
+<!--
+  @grid Movie Card Grid
+  @description
+  Responsive grid layout using Tailwind CSS:
+    - grid-cols-2 on mobile
+    - sm:grid-cols-3 on small screens
+    - md:grid-cols-4 on medium
+    - lg:grid-cols-5 on large
+-->
+<div
+  class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+>
+  <!--
+    @component PrimeNG <p-card>
+    @description
+    Repeated card for each movie in the list using *ngFor.
+    Applies Tailwind classes for cursor style and hover animation.
+    Clicking the card triggers `goToDetails(movie.id)`.
+  -->
+  <p-card
     *ngFor="let movie of movies"
     (click)="goToDetails(movie.id)"
+    class="cursor-pointer hover:scale-105 transition-transform duration-200"
   >
-    <img
-      [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-      [alt]="movie.title"
-    />
-    <a [routerLink]="['/movie', movie.id]">
-      <h3>{{ movie.title }}</h3>
-    </a>
-  </div>
+    <!--
+      @slot pTemplate="header"
+      @description
+      Displays the movie poster at the top of the card.
+      The image is responsive (w-full) and has rounded corners.
+    -->
+    <ng-template pTemplate="header">
+      <!-- Wrapper so we can overlay the spinner -->
+      <div class="relative">
+        <!-- ✦ Poster image ✦ -->
+        <img
+          [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+          [alt]="movie.title"
+          class="w-full h-auto rounded-md transition-opacity duration-300"
+          (load)="movie.posterLoaded = true"
+          (error)="movie.posterLoaded = true"
+          [class.opacity-0]="!movie.posterLoaded"
+          (error)="onPosterError($event, movie)"
+        />
+
+        <!-- ✦ Spinner overlay shown while loading ✦ -->
+        <p-progressSpinner
+          *ngIf="!movie.posterLoaded"
+          styleClass="
+        absolute inset-0 flex items-center justify-center
+        text-blue-500 w-8 h-8
+      "
+        ></p-progressSpinner>
+      </div>
+    </ng-template>
+
+    <!--
+      @slot pTemplate="content"
+      @description
+      Displays the movie title centered below the image.
+    -->
+    <ng-template pTemplate="content">
+      <h3 class="mt-2 text-center text-sm font-medium text-gray-700">
+        {{ movie.title }}
+      </h3>
+    </ng-template>
+  </p-card>
 </div>
 
-@defer (hydrate on interaction) {
-<button (click)="loadMovies(currentPage + 1)" [disabled]="isLoading">
-  {{ isLoading ? "Loading..." : "Load More" }}
-</button>
+<!-- ===== Load-More Button (shows spinner while loading more) ===== -->
+<!-- @defer (hydrate on interaction) {
+<div class="w-full mt-10 flex justify-center">
+  <div class="w-full max-w-xs">
+    <p-button
+      label="{{ isLoading ? 'Loading…' : 'Load More' }}"
+      icon="pi pi-plus"
+      [loading]="isLoading"
+      loadingIcon="pi pi-spinner pi-spin"
+      (onClick)="loadMovies(currentPage + 1)"
+      [disabled]="isLoading"
+      styleClass="
+          w-full
+          bg-blue-600 hover:bg-blue-700 active:bg-blue-800
+          text-white font-medium py-3 rounded-lg
+          transition-colors duration-200
+          focus:outline-none focus:ring-4 focus:ring-blue-300
+        "
+    ></p-button>
+  </div>
+</div>
 } @placeholder {
-<p style="text-align: center; opacity: 0.5">Loading button placeholder...</p>
-}
+<p class="text-center opacity-50 mt-8">Loading button placeholder…</p>
+} -->
+
+<!-- … movie grid stays exactly as you already have … -->
+
+<!-- ===== Infinite-scroll sentinel & spinner ===== -->
+<!-- <div #scrollAnchor></div> -->
+<!-- IntersectionObserver target -->
+
+<!-- movie grid … unchanged … -->
+
+<!-- Spinner while loading additional pages -->
+<div class="flex justify-center mt-8">
+  <p-progressSpinner
+    *ngIf="isLoading && !initialLoad"
+    styleClass="text-blue-600 w-10 h-10"
+  ></p-progressSpinner>
+</div>
+
+<!-- Sentinel element *after* the spinner -->
+<div #sentinel class="block h-2"></div>
