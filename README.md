@@ -1,59 +1,108 @@
-# SmartRenderingDemo
+````markdown
+# مشروع استكشاف الأفلام باستخدام Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.12.
+هذا المشروع هو تطبيق ويب مبني باستخدام Angular يعرض قائمة بالأفلام المشهورة من خلال واجهة TheMovieDB API. يعتمد المشروع على أحدث تقنيات Angular مثل المكونات المستقلة (Standalone Components)، والمعالجة من جهة الخادم (Server-Side Rendering - SSR)، وتأجيل التفاعل (Defer Hydration) لتحسين الأداء وتجربة المستخدم.
 
-## Development server
+---
 
-To start a local development server, run:
+## مميزات المشروع
 
-```bash
-ng serve
+- عرض قائمة بالأفلام الشهيرة من خلال واجهة API
+- صفحة تفاصيل لكل فيلم تشمل إعلان الفيديو
+- تحميل تدريجي لصفحات الأفلام (Infinite Scroll)
+- حماية عرض مقاطع الفيديو باستخدام DomSanitizer
+- دعم كامل للعرض من جهة الخادم (SSR)
+- تحميل مؤجل للعناصر لتحسين سرعة التفاعل
+- استخدام مكونات مستقلة بدون الحاجة إلى NgModules
+
+---
+
+## التقنيات المستخدمة
+
+- Angular (الإصدار 17 أو أحدث)
+- TheMovieDB API
+- العرض من جهة الخادم باستخدام @angular/ssr
+- نظام التوجيه باستخدام @angular/router
+- جلب البيانات باستخدام HttpClient
+- حماية المحتوى باستخدام DomSanitizer
+
+---
+
+## خطوات التشغيل
+
+1. **استنساخ المشروع**
+   ```bash
+   git clone https://github.com/ahmedhegazydev/smart-rendering-demo.git
+   cd angular-movie-app
+   ```
+````
+
+2. **تثبيت الحزم المطلوبة**
+
+   ```bash
+   npm install
+   ```
+
+3. **تشغيل التطبيق في الوضع المحلي**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **بناء المشروع للعرض من جهة الخادم**
+
+   ```bash
+   npm run build:ssr
+   ```
+
+5. **تشغيل خادم SSR**
+
+   ```bash
+   npm run serve:ssr
+   ```
+
+---
+
+## متطلبات بيئة التطوير
+
+للتشغيل السليم، تحتاج إلى مفتاح API من موقع TheMovieDB.
+يمكنك وضعه مباشرة داخل كود الخدمة كما يلي:
+
+```ts
+const apiKey = "ضع_مفتاحك_هنا";
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+أو يمكنك لاحقًا استخدام ملفات بيئية مثل `.env` عندما يتم تهيئة ذلك.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## هيكل المشروع
 
-```bash
-ng generate component component-name
+```
+src/
+├── app/
+│   ├── movies-list/        مكون عرض قائمة الأفلام
+│   ├── movie-details/      مكون عرض تفاصيل الفيلم
+│   ├── safe.pipe.ts        بايب لحماية روابط الفيديو
+│   ├── movie.service.ts    خدمة جلب بيانات الأفلام
+├── app.routes.ts           إعدادات التوجيه
+├── app.config.ts           مزودات التطبيق العامة
+├── main.ts                 نقطة بدء التطبيق
+├── server.ts               نقطة بدء SSR
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## تحسينات مستقبلية مقترحة
 
-## Building
+- إضافة ميزة البحث عن الأفلام
+- تصفية حسب التقييم أو النوع
+- كتابة اختبارات للوحدات
+- حفظ قائمة المفضلة باستخدام LocalStorage
+- دعم الوضع الليلي
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## الرخصة
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+هذا المشروع مرخص تحت رخصة MIT. جميع الحقوق محفوظة لصاحب المشروع.
