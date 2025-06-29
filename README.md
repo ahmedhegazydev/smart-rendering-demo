@@ -9,7 +9,9 @@
 
 - عرض قائمة بالأفلام الشهيرة من خلال واجهة API
 - صفحة تفاصيل لكل فيلم تشمل إعلان الفيديو
-- تحميل تدريجي لصفحات الأفلام (Infinite Scroll)
+- تحميل تدريجي لصفحات الأفلام (Infinite Scroll / Pagination)
+- استخدام PrimeNG لعرض الكروت، الأزرار، والمؤشرات (Cards, Buttons, Spinners)
+- تنسيق متجاوب بالكامل باستخدام Tailwind CSS
 - حماية عرض مقاطع الفيديو باستخدام DomSanitizer
 - دعم كامل للعرض من جهة الخادم (SSR)
 - تحميل مؤجل للعناصر لتحسين سرعة التفاعل
@@ -21,6 +23,8 @@
 
 - Angular (الإصدار 17 أو أحدث)
 - TheMovieDB API
+- PrimeNG UI Toolkit (Card, Button, ProgressSpinner)
+- Tailwind CSS
 - العرض من جهة الخادم باستخدام @angular/ssr
 - نظام التوجيه باستخدام @angular/router
 - جلب البيانات باستخدام HttpClient

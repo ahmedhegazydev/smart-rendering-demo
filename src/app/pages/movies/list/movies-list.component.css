@@ -1,13 +1,49 @@
+/**
+ * =====================  Movies Grid & Card Styles  =====================
+ *
+ * .movie-grid
+ *   A simple flex-box wrapper that lays out movie cards responsively.
+ *
+ * .movie-card
+ *   Individual clickable card: fixed width, centered text.
+ *
+ * .movie-card img
+ *   Poster artwork: fills card width and has gentle rounded corners.
+ * ----------------------------------------------------------------------
+ */
+
+/**
+ * Flex container that wraps rows of movie cards and spaces them out.
+ *
+ * @rule display         flex  → horizontal flow by default
+ * @rule flex-wrap       wrap  → cards wrap onto new lines
+ * @rule gap             16px → uniform row/column gap (modern browsers)
+ */
 .movie-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
 }
+
+/**
+ * Clickable poster + title block.
+ *
+ * @rule width           160px → fixed card width for consistent grid
+ * @rule cursor          pointer → “hand” cursor on hover
+ * @rule text-align      center  → center the title under the poster
+ */
 .movie-card {
   width: 160px;
   cursor: pointer;
   text-align: center;
 }
+
+/**
+ * Poster image inside each card.
+ *
+ * @rule width           100%   → fills entire card width
+ * @rule border-radius   8px    → subtle rounded corners for style
+ */
 .movie-card img {
   width: 100%;
   border-radius: 8px;
